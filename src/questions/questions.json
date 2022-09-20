@@ -1,0 +1,36 @@
+[
+    {
+        "question": "What is the number of Partipants attending **{meeting_name}** Meeting per date, date filter between **{start_date}** and **{end_date}**",
+        "placeholders": [
+            {
+                "name": "meeting_name",
+                "datatype": "str"
+            },
+            {
+                "name": "start_date",
+                "datatype": "date"
+            },
+            {
+                "name": "end_date",
+                "datatype": "date"
+            }
+        ]
+    },
+    {
+        "question": "What is the duration of **{meeting_name}** Meeting per date, date filter between **{start_date}** and **{end_date}****",
+        "placeholders": [
+            {
+                "name": "meeting_name",
+                "datatype": "str"
+            },
+            {
+                "name": "start_date",
+                "datatype": "date"
+            },
+            {
+                "name": "end_date",
+                "datatype": "date"
+            }
+        ]
+    }
+]
