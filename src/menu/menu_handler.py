@@ -42,7 +42,7 @@ def handle_questions_menu():
 
         elif (selected_question == "1" or
               selected_question == "2"):
-            array_questions.append(questions_lists[int(selected_question)-1])
+            array_questions.append(questions_list[int(selected_question)-1])
             counter += 1
             print("Question selected: ", selected_question)
             print("Questions selected: ", array_questions)
