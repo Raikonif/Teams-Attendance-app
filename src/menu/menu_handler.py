@@ -9,8 +9,20 @@ def question_menu(questions_list):
 def filter_dates(first_date, last_date):
     first_date_strip = first_date.split('/')
     last_date_strip = last_date.split('/')
-    sum_days = abs(int(first_date[0]) - int(last_date[0]))
-    print(sum_days)
+    sum_days = abs(int(first_date_strip[1]) - int(last_date_strip[1]))
+    sum_months = abs(int(first_date_strip[0]) - int(last_date_strip[0]))
+    sum_years = abs(int(first_date_strip[2]) - int(last_date_strip[2]))
+    print("DAYS ", sum_days)
+    print("MONTHS", sum_months)
+    print("YEARS", sum_years)
+    if(sum_days > 0 and sum_months == 0 and sum_years == 0):
+        date_list = [
+            current_date for current_date in range(int(first_date_strip[1]), int(last_date_strip[1])+1)
+            ]
+        
+    print(date_list)
+    
+
     # sum_months = abs(int(first_date[1]) - int(last_date[1]))
     # sum_years = abs(int(first_date[2]) - int(last_date[2]))
     # print("{}, {}, {}".format(sum_days, sum_months, sum_years))
@@ -54,6 +66,7 @@ def handle_questions_menu():
     return question_selected
 
 def get_data_from_csv():
+
     pass
 
 
