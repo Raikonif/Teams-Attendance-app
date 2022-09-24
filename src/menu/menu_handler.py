@@ -1,5 +1,5 @@
 from datetime import datetime,date
-
+import os
 
 
 
@@ -23,19 +23,9 @@ def question_menu(questions_list):
         print(questions_list.index(q)+1, q, sep=". ")
 
 
-def handle_questions_menu():
+def resolve_option_menu_selected(questions_list):
     run = True
     question_selected = ''
-    meeting_title = ''
-    questions_list = [
-        "What is the number of Partipants attending General Meeting per date, " 
-    "date filter between 9/12/2022 and 9/16/2022?",
-    "What is the Meeting duration of General Meeting per date, " 
-    "date filter between between 9/12/2022 and 9/16/2022?"
-    ]
-
-    question_menu(questions_list)
-    
     while run:
         selected_question = input("Select a question or Q to quit: ")
 
@@ -56,10 +46,26 @@ def handle_questions_menu():
 
     return question_selected
 
+def handle_questions_menu():
+    meeting_title = ''
+    questions_list = [
+        "What is the number of Partipants attending General Meeting per date, " 
+    "date filter between 9/12/2022 and 9/16/2022?",
+    "What is the Meeting duration of General Meeting per date, " 
+    "date filter between between 9/12/2022 and 9/16/2022?"
+    ]
+
+    question_menu(questions_list)
+    
+    question_selected = resolve_option_menu_selected(questions_list)
+    
+    return question_selected
+    
+
 def get_data_from_csv():
-    with open('data.csv', mode="r") as file:
-        data = file.read()
-        print(data)
+    DIR_PATH = "../attendace_reports/04252022/"
+    with open(DIR_PATH+'meetingAttendanceReport.csv', "r") as file:
+        print(file)
     print("We read the Csv file")
 
 
