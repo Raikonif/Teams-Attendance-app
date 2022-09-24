@@ -1,12 +1,23 @@
+from datetime import datetime,date
+
+
 def question_menu(questions_list):
     for q in questions_list:
         print(questions_list.index(q)+1, q, sep=". ")
-    print('Q. Quit')
+
+
+def filter_dates(first_date, last_date):
+    first_date_strip = first_date.split('/')
+    last_date_strip = last_date.split('/')
+    sum_days = abs(int(first_date[0]) - int(last_date[0]))
+    print(sum_days)
+    # sum_months = abs(int(first_date[1]) - int(last_date[1]))
+    # sum_years = abs(int(first_date[2]) - int(last_date[2]))
+    # print("{}, {}, {}".format(sum_days, sum_months, sum_years))
 
 def handle_questions_menu():
-    counter = 0
     run = True
-    array_questions = []
+    question_selected = ''
     meeting_title = ''
     data_datetime = {
         "start_date":'9/12/2022',
@@ -27,54 +38,53 @@ def handle_questions_menu():
 
         if (selected_question == "Q" or
             selected_question == "quit" or
-                selected_question == "q" and
-                array_questions == []):
+                selected_question == "q"):
             run = False
             print("Quit, bye!")
             exit()
-        elif (selected_question == "Q" or
-                selected_question == "quit" or
-                selected_question == "q" and
-                array_questions != []):
-            run = False
-            print("Quit, bye!")
-            return array_questions
 
         elif (selected_question == "1" or
               selected_question == "2"):
-            array_questions.append(questions_list[int(selected_question)-1])
-            counter += 1
-            print("Question selected: ", selected_question)
-            print("Questions selected: ", array_questions)
-            print("counter: ", counter)
-    return selected_question
+            question_selected = questions_list[int(selected_question)-1]
+            print("Question selected: ", question_selected)
+            run = False
+        else :
+            print("Invalid option, try again")
+
+    return question_selected
+
+def get_data_from_csv():
+    pass
 
 
-def handle_question_input_data(selected_question):
-    counter = 0
+def handle_question_input_data(question_selected):
     run = True
+    print("===========================================")
+    print("REQUESTED QUESTIONS:")
+    print(question_selected)
+    print("===========================================")
+    print('We print the Result of the read the Csv file')
     while run:
-        print("=======REQUESTED QUESTIONS:")
-        for question in selected_question:
-            counter += 1
-            print(f"question: {counter}", question)
+        input_user = input("Wanna do another question? Y/N: ")
+    
+        if input_user == "Y" or input_user == "y":
+            print("""
+        
+                RETURNING TO THE MAIN MENU
+        
+            """)
+            run = False
+            return True
 
-        print("Q. Quit")
-        print("===========================")
-
-        input_user = input("Select a question (Q to quit): ")
-        counter = 0
-        for q in selected_question:
-            if (input_user == selected_question.index(q)):
-                print("===========================")
-                participants = input("Enter the number of participants: ")
-                print("===========================")
-            elif(input_user == "Q" or
-                input_user == "quit" or
-                input_user == "q"):
-                run = False
-                print("Quit, bye!")
-                exit()
+        elif input_user == "N" or input_user == "n": 
+            run = False
+            return False
+    
+        else:
+            print("Invalid option, try again")
+            run = True
+        
+        
 
         
 
