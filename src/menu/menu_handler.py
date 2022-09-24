@@ -27,11 +27,6 @@ def handle_questions_menu():
     run = True
     question_selected = ''
     meeting_title = ''
-    data_datetime = {
-        "start_date":'9/12/2022',
-        "end_date":'9/16/2022',
-        "participants":0,
-    }
     questions_list = [
         "What is the number of Partipants attending General Meeting per date, " 
     "date filter between 9/12/2022 and 9/16/2022?",
@@ -62,11 +57,10 @@ def handle_questions_menu():
     return question_selected
 
 def get_data_from_csv():
-    # with open(file="data.csv", mode="r") as file:
-    #     data = file.read()
-    #     print(data)
+    with open('data.csv', mode="r") as file:
+        data = file.read()
+        print(data)
     print("We read the Csv file")
-    pass
 
 
 def handle_question_input_data(question_selected):
