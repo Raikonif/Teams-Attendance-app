@@ -1,7 +1,6 @@
 from datetime import datetime,date
 import os
-
-
+from pathlib import Path
 
 
 def filter_dates(first_date, last_date):
@@ -65,7 +64,11 @@ def handle_questions_menu():
 def get_data_from_csv():
     DIR_PATH = "../attendace_reports/04252022/"
     with open(DIR_PATH+'meetingAttendanceReport.csv', "r") as file:
-        print(file)
+        # print(file.read())
+        file.close()
+        print(os.listdir('../attendace_reports/'))
+        print(list(Path('../attendace_reports/').iterdir()))
+        # print(type(os.getcwd())) 
     print("We read the Csv file")
 
 
