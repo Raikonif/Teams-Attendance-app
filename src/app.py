@@ -12,7 +12,7 @@ def main():
         selected_question = handle_questions_menu()
     ## show `request Question input data + Quit option` while not Quit
     # selected_question is string or number or tuple or list or dictionary
-        filter_dates(initial_date, final_date)
+        date_list_selected = filter_dates(initial_date, final_date)
         options = handle_question_input_data(selected_question)
     
 

@@ -1,31 +1,27 @@
 from datetime import datetime,date
 
 
+
+
+
+def filter_dates(first_date, last_date):
+    first_date_split = first_date.split('/')
+    last_date_split = last_date.split('/')
+    date_list = []
+    sum_days = abs(int(first_date_split[1]) - int(last_date_split[1]))
+    sum_months = abs(int(first_date_split[0]) - int(last_date_split[0]))
+    sum_years = abs(int(first_date_split[2]) - int(last_date_split[2]))
+    if(sum_days > 0 and sum_months == 0 and sum_years == 0):
+        for current_date in range(int(first_date_split[1]), int(last_date_split[1])+1):
+            date_list.append('{}/{}/{}'.format(current_date, first_date_split[0], first_date_split[2]))
+            print("{}/{}/{}".format(current_date,first_date_split[0],first_date_split[2]))
+    return date_list
+
+
 def question_menu(questions_list):
     for q in questions_list:
         print(questions_list.index(q)+1, q, sep=". ")
 
-
-def filter_dates(first_date, last_date):
-    first_date_strip = first_date.split('/')
-    last_date_strip = last_date.split('/')
-    sum_days = abs(int(first_date_strip[1]) - int(last_date_strip[1]))
-    sum_months = abs(int(first_date_strip[0]) - int(last_date_strip[0]))
-    sum_years = abs(int(first_date_strip[2]) - int(last_date_strip[2]))
-    print("DAYS ", sum_days)
-    print("MONTHS", sum_months)
-    print("YEARS", sum_years)
-    if(sum_days > 0 and sum_months == 0 and sum_years == 0):
-        date_list = [
-            current_date for current_date in range(int(first_date_strip[1]), int(last_date_strip[1])+1)
-            ]
-        
-    print(date_list)
-    
-
-    # sum_months = abs(int(first_date[1]) - int(last_date[1]))
-    # sum_years = abs(int(first_date[2]) - int(last_date[2]))
-    # print("{}, {}, {}".format(sum_days, sum_months, sum_years))
 
 def handle_questions_menu():
     run = True
@@ -66,7 +62,10 @@ def handle_questions_menu():
     return question_selected
 
 def get_data_from_csv():
-
+    # with open(file="data.csv", mode="r") as file:
+    #     data = file.read()
+    #     print(data)
+    print("We read the Csv file")
     pass
 
 
@@ -76,7 +75,7 @@ def handle_question_input_data(question_selected):
     print("REQUESTED QUESTIONS:")
     print(question_selected)
     print("===========================================")
-    print('We print the Result of the read the Csv file')
+    get_data_from_csv()
     while run:
         input_user = input("Wanna do another question? Y/N: ")
     
@@ -90,6 +89,7 @@ def handle_question_input_data(question_selected):
             return True
 
         elif input_user == "N" or input_user == "n": 
+            print("Quit, bye!")
             run = False
             return False
     
