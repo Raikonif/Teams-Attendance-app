@@ -98,12 +98,10 @@ def answer_questions(file_list, meeting_title, participants):
                 elif line.find(participants) != -1:
                     current_participants = line
                     current_participants_formatted = current_participants.strip('\n').split('\t')[1]
-            # print("===========================================")
-            # print(meeting_title, current_title_formatted)
-            # print(participants, current_participants_formatted)
             list_meeting_result = handle_result_data_formatted(
                 current_participants_formatted, 
-                current_title_formatted, list_of_meetings
+                current_title_formatted, 
+                list_of_meetings
                 )
     print("===========================================")
     print(list_meeting_result)
