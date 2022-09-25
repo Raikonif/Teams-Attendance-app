@@ -59,17 +59,48 @@ def handle_questions_menu():
     question_selected = resolve_option_menu_selected(questions_list)
     
     return question_selected
+
+
+def finding_files():
+    output = []
+    with os.scandir("../attendace_reports/") as dirs:
+        for entry in dirs:
+            if entry.is_dir():
+                get_csv_list(output, entry)
+    
+    return output
+    print("We read the Csv file")
+
+
+def get_csv_list(output, entry):
+    with os.scandir(entry) as files:
+        for file in files:
+            if file.is_file() and file.name.endswith(".csv"):
+                output.append(file)
+                # print(file.name)            
     
 
-def get_data_from_csv():
-    DIR_PATH = "../attendace_reports/04252022/"
-    with open(DIR_PATH+'meetingAttendanceReport.csv', "r") as file:
-        # print(file.read())
-        file.close()
-        print(os.listdir('../attendace_reports/'))
-        print(list(Path('../attendace_reports/').iterdir()))
-        # print(type(os.getcwd())) 
-    print("We read the Csv file")
+def answer_questions(file_list):
+    participants = 'Total Number of Participants'
+    title = 'Meeting Title'
+    current_participants = 0
+    current_title = ''
+
+    for file in file_list:
+        with open(file, 'r', encoding='UTF-16') as f:
+            for line in f.readlines():
+                if line.find(title) != -1:
+                    current_title = line.split(',')
+                    # print(line)
+                
+                elif line.find(participants) != -1:
+                    current_participants = line.split(',')
+                    # print(line)
+            
+            print("===========================================")
+            print('Title', current_title)
+            print('Participants', current_participants)
+                    
 
 
 def handle_question_input_data(question_selected):
@@ -78,7 +109,10 @@ def handle_question_input_data(question_selected):
     print("REQUESTED QUESTIONS:")
     print(question_selected)
     print("===========================================")
-    get_data_from_csv()
+    file_list = finding_files()
+    answer_questions(file_list)
+    
+
     while run:
         input_user = input("Wanna do another question? Y/N: ")
     
