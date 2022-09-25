@@ -2,6 +2,8 @@ from datetime import datetime,date
 import os
 from pathlib import Path
 
+MEETING_TITLE = 'Meeting Title'
+PARTICIPANTS = 'Total Number of Participants'
 
 def filter_dates(first_date, last_date):
     first_date_split = first_date.split('/')
@@ -12,14 +14,32 @@ def filter_dates(first_date, last_date):
     sum_years = abs(int(first_date_split[2]) - int(last_date_split[2]))
     if(sum_days > 0 and sum_months == 0 and sum_years == 0):
         for current_date in range(int(first_date_split[1]), int(last_date_split[1])+1):
-            date_list.append('{}/{}/{}'.format(current_date, first_date_split[0], first_date_split[2]))
-            print("{}/{}/{}".format(current_date,first_date_split[0],first_date_split[2]))
+            formatted_date = '{}/{}/{}'.format(current_date, first_date_split[0], first_date_split[2])
+            date_list.append(formatted_date)
+            print(formatted_date)
+
     return date_list
 
 
 def question_menu(questions_list):
     for q in questions_list:
         print(questions_list.index(q)+1, q, sep=". ")
+
+
+def handle_questions_menu():
+    meeting_title = ''
+    questions_list = [
+        "What is the number of Partipants attending General Meeting per date, " 
+    "date filter between 9/12/2022 and 9/16/2022?",
+    "What is the Meeting duration of General Meeting per date, " 
+    "date filter between between 9/12/2022 and 9/16/2022?"
+    ]
+
+    question_menu(questions_list)
+    
+    question_selected = resolve_option_menu_selected(questions_list)
+    
+    return question_selected
 
 
 def resolve_option_menu_selected(questions_list):
@@ -45,21 +65,6 @@ def resolve_option_menu_selected(questions_list):
 
     return question_selected
 
-def handle_questions_menu():
-    meeting_title = ''
-    questions_list = [
-        "What is the number of Partipants attending General Meeting per date, " 
-    "date filter between 9/12/2022 and 9/16/2022?",
-    "What is the Meeting duration of General Meeting per date, " 
-    "date filter between between 9/12/2022 and 9/16/2022?"
-    ]
-
-    question_menu(questions_list)
-    
-    question_selected = resolve_option_menu_selected(questions_list)
-    
-    return question_selected
-
 
 def finding_files():
     output = []
@@ -77,30 +82,41 @@ def get_csv_list(output, entry):
         for file in files:
             if file.is_file() and file.name.endswith(".csv"):
                 output.append(file)
-                # print(file.name)            
     
 
-def answer_questions(file_list):
-    participants = 'Total Number of Participants'
-    title = 'Meeting Title'
+def answer_questions(file_list, meeting_title, participants):
     current_participants = 0
     current_title = ''
-
+    list_of_meetings = []
     for file in file_list:
         with open(file, 'r', encoding='UTF-16') as f:
             for line in f.readlines():
-                if line.find(title) != -1:
-                    current_title = line.split(',')
-                    # print(line)
+                if line.find(meeting_title) != -1:
+                    current_title = line
+                    current_title_formatted = current_title.strip('\n').split('\t')[1]
                 
                 elif line.find(participants) != -1:
-                    current_participants = line.split(',')
-                    # print(line)
-            
-            print("===========================================")
-            print('Title', current_title)
-            print('Participants', current_participants)
-                    
+                    current_participants = line
+                    current_participants_formatted = current_participants.strip('\n').split('\t')[1]
+            # print("===========================================")
+            # print(meeting_title, current_title_formatted)
+            # print(participants, current_participants_formatted)
+            list_meeting_result = handle_result_data_formatted(
+                current_participants_formatted, 
+                current_title_formatted, list_of_meetings
+                )
+    print("===========================================")
+    print(list_meeting_result)
+
+def handle_result_data_formatted(current_participants_formatted, current_title_formatted, list_of_meetings):
+    dict_meeting = {
+        'meeting_title': '',
+        'participants': 0
+    }
+    dict_meeting['meeting_title'] = current_title_formatted
+    dict_meeting['participants'] = current_participants_formatted
+    list_of_meetings.append(dict_meeting)
+    return list_of_meetings
 
 
 def handle_question_input_data(question_selected):
@@ -110,7 +126,7 @@ def handle_question_input_data(question_selected):
     print(question_selected)
     print("===========================================")
     file_list = finding_files()
-    answer_questions(file_list)
+    answer_questions(file_list, MEETING_TITLE, PARTICIPANTS)
     
 
     while run:
