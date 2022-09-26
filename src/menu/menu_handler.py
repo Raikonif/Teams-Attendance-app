@@ -54,13 +54,13 @@ def resolve_option_menu_selected(questions_list):
             run = False
             print("Quit, bye!")
             exit()
-
-        elif (selected_question == "1" or
-              selected_question == "2"):
+        
+        elif (selected_question.isdigit() and int(selected_question) < len(questions_list)):
             question_selected = questions_list[int(selected_question)-1]
             print("Question selected: ", question_selected)
             run = False
-        else :
+        
+        else:
             print("Invalid option, try again")
 
     return question_selected
@@ -106,13 +106,13 @@ def answer_questions(file_list, meeting_title, participants):
     print("===========================================")
     print(list_meeting_result)
 
-def handle_result_data_formatted(current_participants_formatted, current_title_formatted, list_of_meetings):
+def handle_result_data_formatted(participants_formatted, title_formatted, list_of_meetings):
     dict_meeting = {
         'meeting_title': '',
         'participants': 0
     }
-    dict_meeting['meeting_title'] = current_title_formatted
-    dict_meeting['participants'] = current_participants_formatted
+    dict_meeting['meeting_title'] = title_formatted
+    dict_meeting['participants'] = participants_formatted
     list_of_meetings.append(dict_meeting)
     return list_of_meetings
 
