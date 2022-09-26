@@ -4,6 +4,8 @@ from pathlib import Path
 
 MEETING_TITLE = 'Meeting Title'
 PARTICIPANTS = 'Total Number of Participants'
+MEETING_START = 'Meeting Start Time'
+MEETING_END = 'Meeting End Time'
 
 def filter_dates(first_date, last_date):
     first_date_split = first_date.split('/')
@@ -45,6 +47,7 @@ def handle_questions_menu():
 def resolve_option_menu_selected(questions_list):
     run = True
     question_selected = ''
+    dict_question_selected = {}
     while run:
         selected_question = input("Select a question or Q to quit: ")
 
@@ -57,13 +60,16 @@ def resolve_option_menu_selected(questions_list):
         
         elif (selected_question.isdigit() and int(selected_question) < len(questions_list)):
             question_selected = questions_list[int(selected_question)-1]
+            dict_question_selected[int(selected_question)] = question_selected
+            print('Dict', dict_question_selected)
             print("Question selected: ", question_selected)
             run = False
         
         else:
             print("Invalid option, try again")
 
-    return question_selected
+    return dict_question_selected
+    # return question_selected
 
 
 def finding_files():
@@ -121,15 +127,13 @@ def handle_question_input_data(question_selected):
     run = True
     print("===========================================")
     print("REQUESTED QUESTIONS:")
-    print(question_selected)
+    value = [print(value) for value in question_selected.values()]
     print("===========================================")
     file_list = finding_files()
     answer_questions(file_list, MEETING_TITLE, PARTICIPANTS)
-    
 
     while run:
         input_user = input("Wanna do another question? Y/N: ")
-    
         if input_user == "Y" or input_user == "y":
             print("""
         
